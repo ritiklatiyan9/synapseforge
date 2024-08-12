@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React from "react";
+import { motion } from "framer-motion";
 
 function Marquee() {
   const customFontStyle = {
@@ -26,22 +26,22 @@ function Marquee() {
     <div
       data-scroll
       data-scroll-section
-      data-scroll-speed=".1"
-      className='w-full py-20 md:py-20 bg-[#0b3b32] rounded-tl-3xl rounded-tr-3xl'
+      data-scroll-speed="0.3"
+      className="w-full py-20 md:py-20 bg-[#0b3b32] rounded-tl-3xl rounded-tr-3xl"
     >
       <div
         style={customFontStyle}
-        className='text border-t-2 border-b-2 border-zinc-100 p-6 md:p-10 flex overflow-hidden whitespace-nowrap'
+        className="border-t-2 border-b-2 border-zinc-100 p-6 md:p-10 flex overflow-hidden whitespace-nowrap"
       >
         <motion.div
-          className='flex'
+          className="flex"
           variants={marqueeVariants}
           animate="animate"
         >
           {[...Array(8)].map((_, index) => (
             <h1
               key={index}
-              className='text-[8vw] md:text-[6vw] lg:text-[8vw] leading-none mx-4'
+              className="text-[8vw] md:text-[6vw] lg:text-[8vw] leading-none mx-4"
             >
               Let's Build Together
             </h1>

@@ -9,12 +9,18 @@ function About() {
 
   return (
     <div
+      data-scroll
+    
+      data-scroll-speed="0.4"
       style={customFontStyle}
       className="w-full py-10  md:py-20 bg-[#CDEA68] p-6 md:p-20 text-base md:text-2xl rounded-3xl text-black capitalize leading-7"
     >
       <h1 className="border-b-2 border-black p-4 md:p-6 text-center md:text-left">
-      we specialize in delivering innovative solutions that drive success and exceed expectations. Our expert team is dedicated to turning your unique vision into reality with precision and excellence. From cutting-edge technology to seamless integration, we provide tailored services that help your business thrive in today’s dynamic landscape.
-      
+        we specialize in delivering innovative solutions that drive success and
+        exceed expectations. Our expert team is dedicated to turning your unique
+        vision into reality with precision and excellence. From cutting-edge
+        technology to seamless integration, we provide tailored services that
+        help your business thrive in today’s dynamic landscape.
       </h1>
 
       <div className="flex flex-col md:flex-row text-black mt-10 md:mt-40 justify-center md:justify-between items-center">
