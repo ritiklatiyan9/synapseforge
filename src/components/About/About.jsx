@@ -10,10 +10,10 @@ function About() {
   return (
     <div
       data-scroll
-    
+      data-scroll-section 
       data-scroll-speed="0.4"
       style={customFontStyle}
-      className="w-full py-10  md:py-20 bg-[#CDEA68] p-6 md:p-20 text-base md:text-2xl rounded-3xl text-black capitalize leading-7"
+      className="w-full py-10  md:py-10 bg-[#CDEA68] p-6 md:p-2 text-base md:text-2xl rounded-3xl text-black capitalize leading-7"
     >
       <h1 className="border-b-2 border-black p-4 md:p-6 text-center md:text-left">
         we specialize in delivering innovative solutions that drive success and
