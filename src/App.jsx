@@ -9,25 +9,21 @@ import Marque from "./components/Marque/Marque";
 import About from "./components/About/About";
 import Featured from "./components/Featured/Featured";
 import Cards from "./components/Cards/Cards";
-import Services from "../src/components/Services/Services";
-import Works from "../src/components/Work/Work";
-import Contact from "../src/components/Contact/Contact";
+import Services from "./components/Services/Services";
+import Works from "./components/Work/Work";
+import Contact from "./components/Contact/Contact";
 import Footer from "./components/Footer/Footer";
 import Preloader from "./components/Preloader/preloader";
 
-import logoSrc from "../src/assets/2.png";
+import logoSrc from "./assets/2.png";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const scrollRef = useRef(null);
 
   useEffect(() => {
-    let locomotiveScroll;
-
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-      
-      // Create and append the locomotive scroll styles
+    if (!isLoading) {
+      // Create and append the Locomotive Scroll styles
       const locomotiveScrollStyles = document.createElement('style');
       locomotiveScrollStyles.textContent = `
         html.has-scroll-smooth {
@@ -91,18 +87,26 @@ function App() {
       `;
       document.head.appendChild(locomotiveScrollStyles);
 
-      locomotiveScroll = new LocomotiveScroll({
+      const locomotiveScroll = new LocomotiveScroll({
         el: scrollRef.current,
         smooth: true,
         multiplier: 1,
         class: "is-revealed",
       });
+
+      return () => {
+        locomotiveScroll.destroy();
+        document.head.removeChild(locomotiveScrollStyles);
+      };
+    }
+  }, [isLoading]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
     }, 2000);
 
-    return () => {
-      clearTimeout(timer);
-      if (locomotiveScroll) locomotiveScroll.destroy();
-    };
+    return () => clearTimeout(timer);
   }, []);
 
   const pageVariants = {
