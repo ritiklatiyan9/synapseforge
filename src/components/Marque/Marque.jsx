@@ -8,6 +8,20 @@ function Marquee() {
     fontStyle: "normal",
   };
 
+  const marqueeVariants = {
+    animate: {
+      x: [0, -1035],
+      transition: {
+        x: {
+          repeat: Infinity,
+          repeatType: "loop",
+          duration: 10,
+          ease: "linear",
+        },
+      },
+    },
+  };
+
   return (
     <div
       data-scroll
@@ -21,39 +35,15 @@ function Marquee() {
       >
         <motion.div
           className='flex'
-          initial={{ x: '100%' }}
-          animate={{ x: '-100%' }}
-          transition={{
-            ease: "linear",
-            repeat: Infinity,
-            duration: 15 // Adjusted for smoother animation
-          }}
+          variants={marqueeVariants}
+          animate="animate"
         >
-          {[...Array(6)].map((_, index) => ( // Increased repetitions for smoother loop
+          {[...Array(8)].map((_, index) => (
             <h1
               key={index}
               className='text-[8vw] md:text-[6vw] lg:text-[8vw] leading-none mx-4'
             >
-              Let's Build Together 
-            </h1>
-          ))}
-        </motion.div>
-        <motion.div
-          className='flex'
-          initial={{ x: '100%' }}
-          animate={{ x: '-100%' }}
-          transition={{
-            ease: "linear",
-            repeat: Infinity,
-            duration: 15 // Adjusted for smoother animation
-          }}
-        >
-          {[...Array(6)].map((_, index) => ( // Increased repetitions for smoother loop
-            <h1
-              key={index}
-              className='text-[8vw] md:text-[6vw] lg:text-[8vw] leading-none mx-4'
-            >
-             Let's Build Together
+              Let's Build Together
             </h1>
           ))}
         </motion.div>

@@ -27,7 +27,7 @@ function Featured() {
       </div>
       <div className="px-6 md:px-20 mt-10 md:mt-20 relative">
         <h1 className="absolute left-1/2 top-0 transform -translate-x-1/2 text-4xl md:text-8xl z-[999] text-yellow-300">
-          {"GENTLE".split("").map((item, index) => (
+          {"PROJECTS".split("").map((item, index) => (
             <motion.span
               key={index}
               initial={{ y: "100%" }}
