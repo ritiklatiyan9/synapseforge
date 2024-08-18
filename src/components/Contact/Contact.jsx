@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const ContactUsPage = () => {
   const [formData, setFormData] = useState({
@@ -20,16 +21,13 @@ const ContactUsPage = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('https://sf-backend-omega.vercel.app/', {
-        method: 'POST',
+      const response = await axios.post('https://sf-backend-omega.vercel.app/api/form', formData, {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
       });
 
-      const result = await response.json();
-      setStatusMessage(result.message);
+      setStatusMessage(response.data.message);
     } catch (error) {
       setStatusMessage('Failed to submit the form.');
     }
