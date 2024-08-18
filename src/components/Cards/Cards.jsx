@@ -1,5 +1,6 @@
 import React from 'react';
 import gif1 from '../../assets/gif1.gif';
+import logo  from '../../assets/2.png'
 
 function Cards() {
   return (
@@ -34,6 +35,15 @@ function Cards() {
             <img className='w-full h-full object-cover' src="https://imgs.search.brave.com/jXMRuD311LfczKzlgJETpJVXCIagRRpXUIE95AKBrQ0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzLzA1LzQ1/L2U2LzA1NDVlNjRh/ZTBkNzVjMzZmZGM2/YjRjMjY3ZWQ0YjNi/LmpwZw" alt="Tech Image 2" />
           </div>
         </div>
+      </div>
+
+      <div
+       data-scroll
+       data-scroll-section
+       data-scroll-speed=".5"
+      
+      className='flex justify-center align-middle  bg-zinc-950 rounded-2xl p-8'>
+        <img src={logo} alt="" />
       </div>
     </div>
   );
