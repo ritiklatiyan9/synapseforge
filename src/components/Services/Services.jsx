@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useCallback, useMemo } from 'react';
 import { FaCode, FaMobile, FaDesktop, FaCloud, FaNetworkWired, FaGamepad, FaTimes } from 'react-icons/fa';
-import bge from '../../assets/cyber-theme.mp4'
+import bge from '../../assets/cyber-theme.mp4';
+
 const customFontStyle = {
   fontFamily: "'Test Founders Grotesk X-Cond Sm', sans-serif",
   fontWeight: 600,
   fontStyle: "normal",
 };
-
 const services = [
   {
     icon: <FaCode />,
@@ -65,103 +64,92 @@ const services = [
   }
 ];
 
-const ServiceCard = ({ service, onViewDetails }) => (
-  <motion.div
+const ServiceCard = React.memo(({ service, onViewDetails }) => (
+  <div
     style={customFontStyle}
-    whileHover={{ scale: 1.05 }}
-    className="bg-transparent rounded-lg  overflow-hidden  border-zinc-200 border-2 shadow-xl"
+    className="bg-transparent rounded-lg overflow-hidden border-zinc-200 border-2 shadow-xl transition-transform hover:scale-105"
   >
     <img
       src={service.image}
       alt={service.title}
       className="w-full h-56 object-cover"
+      loading="lazy"
     />
     <div className="p-6">
-      <div className="text-4xl text-center mb-4" style={{ color: service.iconColor }}>
-        {service.icon}
-      </div>
+      <div className="text-4xl text-center mb-4">{service.icon}</div>
       <h3 className="text-xl font-bold mb-2 text-white">{service.title}</h3>
       <p className="text-sm text-gray-300 mb-4">{service.tech}</p>
       <p className="text-gray-300 mb-4">{service.description}</p>
-      
     </div>
-  </motion.div>
-);
+  </div>
+));
 
-const Modal = ({ isOpen, onClose, service }) => (
-  <AnimatePresence>
-    {isOpen && service && (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
-        onClick={onClose}
+const Modal = React.memo(({ isOpen, onClose, service }) => {
+  if (!isOpen || !service) return null;
+
+  return (
+    <div
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white rounded-lg p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+        onClick={(e) => e.stopPropagation()}
       >
-        <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.9, opacity: 0 }}
-          className="bg-white rounded-lg p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-3xl font-bold">{service.title}</h2>
-            <button onClick={onClose} className="text-2xl text-gray-500 hover:text-gray-700">
-              <FaTimes />
-            </button>
-          </div>
-          <img
-            src={service.detailedImage}
-            alt={service.title}
-            className="w-full h-64 object-cover mb-6 rounded-lg"
-          />
-          <p className="text-lg">{service.detailedDescription}</p>
-        </motion.div>
-      </motion.div>
-    )}
-  </AnimatePresence>
-);
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-3xl font-bold">{service.title}</h2>
+          <button onClick={onClose} className="text-2xl text-gray-500 hover:text-gray-700">
+            <FaTimes />
+          </button>
+        </div>
+        <img
+          src={service.detailedImage}
+          alt={service.title}
+          className="w-full h-64 object-cover mb-6 rounded-lg"
+          loading="lazy"
+        />
+        <p className="text-lg">{service.detailedDescription}</p>
+      </div>
+    </div>
+  );
+});
 
 const ServicesPage = () => {
   const [selectedService, setSelectedService] = useState(null);
 
-  const handleViewDetails = (service) => {
+  const handleViewDetails = useCallback((service) => {
     setSelectedService(service);
-  };
+  }, []);
 
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     setSelectedService(null);
-  };
+  }, []);
+
+  const memoizedServices = useMemo(() => services.map((service) => (
+    <ServiceCard key={service.title} service={service} onViewDetails={handleViewDetails} />
+  )), [handleViewDetails]);
 
   return (
     <div className="relative">
-      {/* Video Background */}
       <video
         autoPlay
         loop
         muted
         playsInline
-        className="absolute opacity-30 inset-0 w-full h-full object-cover z-[-1]"
+        className="fixed opacity-30 inset-0 w-full h-full object-cover z-[-1]"
         src={bge}
       />
-
-      {/* Services Grid */}
-      <div className="relative z-10 min-h-screen  py-12 px-4 md:px-12 lg:px-24">
+      <div className="relative z-10 min-h-screen py-12 px-4 md:px-12 lg:px-24">
         <h1
           style={customFontStyle}
-          className="text-center border-b-2 border-zinc-100 p-4  text-5xl mt-20 font-bold mb-16 text-white"
+          className="text-center border-b-2 border-zinc-100 p-4 text-5xl mt-20 font-bold mb-16 text-white"
         >
           OUR SERVICES
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service) => (
-            <ServiceCard key={service.title} service={service} onViewDetails={handleViewDetails} />
-          ))}
+          {memoizedServices}
         </div>
       </div>
-
-      {/* Modal for Service Details */}
       <Modal isOpen={!!selectedService} onClose={handleCloseModal} service={selectedService} />
     </div>
   );
