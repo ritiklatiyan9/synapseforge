@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaCode, FaMobile, FaDesktop, FaCloud, FaNetworkWired, FaGamepad, FaTimes } from 'react-icons/fa';
-
-
+import bge from '../../assets/cyber-theme.mp4'
 const customFontStyle = {
   fontFamily: "'Test Founders Grotesk X-Cond Sm', sans-serif",
   fontWeight: 600,
   fontStyle: "normal",
 };
+
 const services = [
   {
     icon: <FaCode />,
@@ -67,9 +67,9 @@ const services = [
 
 const ServiceCard = ({ service, onViewDetails }) => (
   <motion.div
-  style={customFontStyle}
+    style={customFontStyle}
     whileHover={{ scale: 1.05 }}
-    className="bg-white rounded-lg shadow-lg overflow-hidden"
+    className="bg-transparent rounded-lg  overflow-hidden  border-zinc-200 border-2 shadow-xl"
   >
     <img
       src={service.image}
@@ -80,15 +80,10 @@ const ServiceCard = ({ service, onViewDetails }) => (
       <div className="text-4xl text-center mb-4" style={{ color: service.iconColor }}>
         {service.icon}
       </div>
-      <h3 className="text-xl font-bold mb-2">{service.title}</h3>
-      <p className="text-sm text-gray-600 mb-4">{service.tech}</p>
-      <p className="text-gray-700 mb-4">{service.description}</p>
-      <button
-        onClick={() => onViewDetails(service)}
-        className="bg-blue-700 text-white px-4 py-2 rounded-xl shadow-xl hover:bg-blue-600 transition duration-300"
-      >
-        View Details
-      </button>
+      <h3 className="text-xl font-bold mb-2 text-white">{service.title}</h3>
+      <p className="text-sm text-gray-300 mb-4">{service.tech}</p>
+      <p className="text-gray-300 mb-4">{service.description}</p>
+      
     </div>
   </motion.div>
 );
@@ -119,16 +114,9 @@ const Modal = ({ isOpen, onClose, service }) => (
           <img
             src={service.detailedImage}
             alt={service.title}
-            className="w-full h-64 object-cover rounded-lg mb-6"
+            className="w-full h-64 object-cover mb-6 rounded-lg"
           />
-          <p className="text-gray-600 mb-4">{service.tech}</p>
-          <p className="text-gray-800 mb-6">{service.detailedDescription}</p>
-          <button
-            onClick={onClose}
-            className="bg-blue-500 text-white px-4 py-2 rounded-xl hover:bg-blue-600 transition duration-300"
-          >
-            Close
-          </button>
+          <p className="text-lg">{service.detailedDescription}</p>
         </motion.div>
       </motion.div>
     )}
@@ -147,25 +135,34 @@ const ServicesPage = () => {
   };
 
   return (
-    <div   style={customFontStyle} className="min-h-screen bg-zinc-100">
-      <section className="container mx-auto py-16 px-6 text-zinc-900">
-        <h2   style={customFontStyle} className="text-6xl  font-semibold uppercase leading-2 border-b-2  border-zinc-700 p-4  text-center mt-20  mb-12">Our Services</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {services.map((service, index) => (
-            <ServiceCard 
-              key={index} 
-              service={service} 
-              onViewDetails={handleViewDetails}
-            />
+    <div className="relative">
+      {/* Video Background */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute opacity-30 inset-0 w-full h-full object-cover z-[-1]"
+        src={bge}
+      />
+
+      {/* Services Grid */}
+      <div className="relative z-10 min-h-screen  py-12 px-4 md:px-12 lg:px-24">
+        <h1
+          style={customFontStyle}
+          className="text-center border-b-2 border-zinc-100 p-4  text-5xl mt-20 font-bold mb-16 text-white"
+        >
+          OUR SERVICES
+        </h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {services.map((service) => (
+            <ServiceCard key={service.title} service={service} onViewDetails={handleViewDetails} />
           ))}
         </div>
-      </section>
+      </div>
 
-      <Modal 
-        isOpen={selectedService !== null} 
-        onClose={handleCloseModal} 
-        service={selectedService}
-      />
+      {/* Modal for Service Details */}
+      <Modal isOpen={!!selectedService} onClose={handleCloseModal} service={selectedService} />
     </div>
   );
 };
