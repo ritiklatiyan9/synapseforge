@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { motion } from 'framer-motion';
-import { ClimbingBoxLoader } from 'react-spinners';
 
 const ContactUsPage = () => {
   const [formData, setFormData] = useState({
@@ -12,13 +10,6 @@ const ContactUsPage = () => {
 
   const [statusMessage, setStatusMessage] = useState('');
   const [loading, setLoading] = useState(false);
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,101 +24,96 @@ const ContactUsPage = () => {
 
       setStatusMessage(response.data.message);
     } catch (error) {
+      console.error('Error details:', error.response ? error.response.data : error.message);
       setStatusMessage('Failed to submit the form.');
     } finally {
       setLoading(false);
     }
   };
 
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value,
+    });
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-600 via-pink-500 to-red-400 flex flex-col justify-center items-center px-6 py-12">
-      <motion.div
-        className="bg-white shadow-2xl rounded-lg p-8 w-full max-w-lg"
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.6 }}
-      >
-        <motion.h2
-          className="text-4xl font-extrabold text-gray-900 mb-8 text-center"
-          initial={{ y: -50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6 }}
-        >
-          Contact Us
-        </motion.h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-6">
-            <label className="block text-gray-700 text-lg font-semibold mb-2" htmlFor="name">
-              Name
-            </label>
+    <div className="bg-gray-100 text-gray-500 min-h-screen py-16">
+      <div className="container mx-auto px-4">
+        <h2 className="text-4xl mt-10 font-bold text-center mb-4">Contact Us</h2>
+        <h3 className="text-6xl font-semibold text-center mb-6">Let's chat!</h3>
+        <p className="text-center mb-8">Drop us a line through the form below and we'll get back to you</p>
+        <form onSubmit={handleSubmit} className="max-w-md mx-auto">
+          <div className="mb-4">
+            <label htmlFor="name" className="block text-gray-700 font-bold mb-2">First Name*</label>
             <input
               type="text"
-              name="name"
               id="name"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               value={formData.name}
               onChange={handleChange}
-              className="bg-gray-100 border-2 border-gray-300 rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-purple-500"
-              required
             />
           </div>
-          <div className="mb-6">
-            <label className="block text-gray-700 text-lg font-semibold mb-2" htmlFor="email">
-              Email
-            </label>
+
+          <div className="mb-4">
+            <label htmlFor="email" className="block text-gray-700 font-bold mb-2">Email Address*</label>
             <input
               type="email"
-              name="email"
               id="email"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               value={formData.email}
               onChange={handleChange}
-              className="bg-gray-100 border-2 border-gray-300 rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-purple-500"
-              required
             />
           </div>
-          <div className="mb-8">
-            <label className="block text-gray-700 text-lg font-semibold mb-2" htmlFor="message">
-              Message
-            </label>
+
+          <div className="mb-4">
+            <label htmlFor="message" className="block text-gray-700 font-bold mb-2">Message*</label>
             <textarea
-              name="message"
               id="message"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               value={formData.message}
               onChange={handleChange}
-              rows="6"
-              className="bg-gray-100 border-2 border-gray-300 rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-purple-500"
-              required
-            ></textarea>
+            />
           </div>
-          <div className="flex justify-center mb-4">
-            <motion.button
+          <div className="flex items-center justify-center">
+            <button
               type="submit"
-              className="bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform transition-transform hover:scale-105"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              disabled={loading}
             >
-              Send Message
-            </motion.button>
+              {loading ? 'Sending...' : 'Send'}
+            </button>
           </div>
-          {loading && (
-            <div className="flex justify-center mb-4">
-              <ClimbingBoxLoader color="#7F3FBF" loading={loading} />
+          {statusMessage && (
+            <div className="mt-4 text-center text-lg">
+              <p>{statusMessage}</p>
             </div>
           )}
-          {statusMessage && (
-            <motion.p
-              className="mt-4 text-center text-lg font-semibold text-gray-900"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-            >
-              {statusMessage}
-            </motion.p>
-          )}
         </form>
-      </motion.div>
+        <div className="mt-16 p-6">
+          <p className="text-lg font-medium mb-4">If you need to contact us for any other matters, please use the following contact channels:</p>
+          <ul className="list-disc pl-6">
+            <li className="mb-2">
+              For security incidents, email <a href="mailto:security@survicate.com" className="underline text-blue-500">security@survicate.com</a>.
+            </li>
+            <li className="mb-2">
+              Survicate has appointed a Data Protection Officer, Rudi Kosiór. If you have questions or concerns regarding data protection or compliance with privacy regulations, please don't hesitate to reach out to him by sending an email to <a href="mailto:gdpr@survicate.com" className="underline text-blue-500">gdpr@survicate.com</a>.
+            </li>
+            <li className="mb-2">
+              If you have issues or complaints with service quality, billing, invoicing, or concerns about our policies, please reach out to us anytime through the "send us a message" button inside the Survicate product or send an email to <a href="mailto:support@survicate.com" className="underline text-blue-500">support@survicate.com</a>.
+            </li>
+            <li className="mb-2">
+              For any complaints (e.g. related to sustainability, human rights, or environmental law), please send an email to <a href="mailto:complaints@survicate.com" className="underline text-blue-500">complaints@survicate.com</a>.
+            </li>
+            <li className="mb-2">
+              For any other issues, please send an email to <a href="mailto:hello@survicate.com" className="underline text-blue-500">hello@survicate.com</a>.
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   );
 };
 
 export default ContactUsPage;
-  
