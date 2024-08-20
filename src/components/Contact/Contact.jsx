@@ -108,8 +108,10 @@ const ContactForm = () => {
             </motion.button>
           </motion.form>
           {statusMessage && (
-            <div className="mt-4 text-center text-zinc-900   text-lg">
-              <span className='font-semibold border-2 rounded-full px-3 py-2 shadow-2xl '>{statusMessage}</span>
+            <div className="mt-4 text-center text-zinc-900 text-lg">
+              <span className="font-semibold border-2 rounded-full px-3 py-2 shadow-2xl">
+                {statusMessage}
+              </span>
             </div>
           )}
         </div>
@@ -120,12 +122,17 @@ const ContactForm = () => {
           className="w-1/3 flex flex-col justify-between"
         >
           <div className="mb-8">
-            <img src="https://i.pinimg.com/1200x/4a/ff/d8/4affd89a9f1bef68eaddc24a749fa532.jpg" alt="Email illustration" className="w-full" />
+            <img
+              src="https://i.pinimg.com/1200x/4a/ff/d8/4affd89a9f1bef68eaddc24a749fa532.jpg"
+              alt="Email illustration"
+              className="w-full"
+            />
           </div>
           <div>
             <p className="text-gray-600 mb-2">
               <span className="font-bold">151 Greenwood City, Godwin, Meerut</span>
-              <br />       Uttar Pradesh
+              <br />
+              Uttar Pradesh
             </p>
             <p className="text-gray-600 mb-2">+91 6397654747</p>
             <p className="text-gray-600 mb-4">contactus@synapseforge.vercel.app</p>
@@ -137,6 +144,8 @@ const ContactForm = () => {
           </div>
         </motion.div>
       </motion.div>
+
+     
     </div>
   );
 };
