@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaFacebookF, FaTwitter, FaInstagram } from 'react-icons/fa';
+import bgimage from '../../assets/bg.jpg'
+const customFontStyle = {
+  fontFamily: "'Test Founders Grotesk X-Cond Sm', sans-serif",
+  fontWeight: 600,
+  fontStyle: "normal",
+};
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -29,16 +35,29 @@ const ContactPage = () => {
   };
 
   return (
-    <div className="bg-zinc-200 py-16 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mt-20 mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div
+      style={{
+        ...customFontStyle,
+        backgroundImage: `url(${bgimage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        opacity : 0.75,
+      }}
+      className="  py-16 px-4 sm:px-6 lg:px-8"
+    >
+      <div
+      data-scroll
+      data-scroll-section
+      data-scroll-speed="-.1" className="max-w-4xl mt-20 mx-auto w-full sm:w-3/4 lg:w-1/2 px-4 py-8 bg-white bg-opacity-90 rounded-2xl shadow-2xl">
         <motion.div
+         
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="bg-gradient-to-r from-blue-100 to-teal-50 border-green-200 border  p-8 rounded-3xl shadow-2xl"
+          className="bg-zinc200"
         >
-          <h2 className="text-4xl leading-none capitalize font-bold text-gray-800 p-1">Get in Touch.</h2>
-          <p className="text-gray-700 font-medium mb-8  p-2">
+          <h2 className="text-3xl sm:text-4xl leading-none capitalize font-semibold text-gray-800 p-1">GET IN TOUCH.</h2>
+          <p className="text-violet-900 text-md leading-none capitalize font-semibold mb-8 p-2">
             Fill out the form below and we'll get back to you as soon as possible.
           </p>
           <form onSubmit={handleSubmit}>
@@ -46,7 +65,7 @@ const ContactPage = () => {
               type="text"
               id="name"
               placeholder="Your Name"
-              className="w-full mb-4 p-3 text-gray-800 border-violet-300 bg-gray-100 rounded-2xl border-2 shadow-xl"
+              className="w-full mb-4 p-3 text-gray-800 border-brown-300 bg-gray-100 rounded-md border-2 shadow-xl"
               whileFocus={{ scale: 1.05 }}
               value={formData.name}
               onChange={handleChange}
@@ -55,7 +74,7 @@ const ContactPage = () => {
               type="email"
               id="email"
               placeholder="Your Email"
-              className="w-full mb-4 p-3 text-gray-800 border-violet-300 bg-gray-100 rounded-2xl border-2 shadow-xl"
+              className="w-full mb-4 p-3 text-gray-800 border-brown-300 bg-gray-100 rounded-md border-2 shadow-xl"
               whileFocus={{ scale: 1.05 }}
               value={formData.email}
               onChange={handleChange}
@@ -63,14 +82,14 @@ const ContactPage = () => {
             <motion.textarea
               id="message"
               placeholder="Type your message here ..."
-              className="w-full mb-4 p-3 text-gray-800 border-violet-300 bg-gray-100 rounded-2xl border-2 shadow-xl h-32"
+              className="w-full mb-4 p-3 text-gray-800 border-brown-300 bg-gray-100 rounded-md border-2 shadow-xl h-32"
               whileFocus={{ scale: 1.05 }}
               value={formData.message}
               onChange={handleChange}
             ></motion.textarea>
             <motion.button
               type="submit"
-              className="bg-green-600 text-white px-6 py-3 rounded-full flex items-center"
+              className="bg-green-600 text-white px-6 py-3 rounded-md flex items-center"
               whileHover={{ scale: 1.1 }}
               disabled={loading}
             >
@@ -97,54 +116,57 @@ const ContactPage = () => {
             </div>
           )}
         </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="bg-gradient-to-r from-blue-100 to-teal-50 border-2 p-8 rounded-3xl shadow-2xl bg-opacity-50"
-        >
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">Contact Information</h2>
-          <div className="flex items-center mb-4">
-            <FaPhoneAlt className="text-blue-600 mr-3 h-6 w-6" />
-            <p className="text-gray-600">+91 6397654747</p>
-          </div>
-          <div className="flex items-center mb-4">
-            <FaEnvelope className="text-blue-600 mr-3 h-6 w-6" />
-            <p className="text-gray-600">contactus@synapseforge.vercel.app</p>
-          </div>
-          <div className="flex items-center mb-8">
-            <FaMapMarkerAlt className="text-blue-600 mr-3 h-6 w-6" />
-            <p className="text-gray-600">151 Greenwood City, Godwin, Meerut, Uttar Pradesh</p>
-          </div>
-          <div className="flex space-x-4">
-            <a
-              href="https://www.facebook.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-800 transition-colors duration-300"
-            >
-              <FaFacebookF className="h-6 w-6" />
-            </a>
-            <a
-              href="https://www.twitter.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-400 hover:text-blue-600 transition-colors duration-300"
-            >
-              <FaTwitter className="h-6 w-6" />
-            </a>
-            <a
-              href="https://www.instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-pink-600 hover:text-pink-800 transition-colors duration-300"
-            >
-              <FaInstagram className="h-6 w-6" />
-            </a>
-          </div>
-        </motion.div>
       </div>
+
+      <motion.div
+        data-scroll
+        data-scroll-section
+        data-scroll-speed=".5"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+        className="bg-gray-50 w-full sm:w-3/4 lg:w-1/2 mx-auto mt-12 border-2 p-8 rounded-2xl shadow-2xl bg-opacity-90"
+      >
+        <h2 className="text-3xl font-bold text-gray-800 mb-4">Contact Information</h2>
+        <div className="flex items-center mb-4">
+          <FaPhoneAlt className="text-blue-600 mr-3 h-6 w-6" />
+          <p className="text-zinc-800">+91 6397654747</p>
+        </div>
+        <div className="flex items-center mb-4">
+          <FaEnvelope className="text-blue-600 mr-3 h-6 w-6" />
+          <p className="text-zinc-800">contactus@synapseforge.vercel.app</p>
+        </div>
+        <div className="flex items-center mb-8">
+          <FaMapMarkerAlt className="text-blue-600 mr-3 h-6 w-6" />
+          <p className="text-zinc-800">151 Greenwood City, Godwin, Meerut, Uttar Pradesh</p>
+        </div>
+        <div className="flex space-x-4">
+          <a
+            href="https://www.facebook.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:text-blue-800 transition-colors duration-300"
+          >
+            <FaFacebookF className="h-6 w-6" />
+          </a>
+          <a
+            href="https://www.twitter.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-400 hover:text-blue-600 transition-colors duration-300"
+          >
+            <FaTwitter className="h-6 w-6" />
+          </a>
+          <a
+            href="https://www.instagram.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-pink-600 hover:text-pink-800 transition-colors duration-300"
+          >
+            <FaInstagram className="h-6 w-6" />
+          </a>
+        </div>
+      </motion.div>
     </div>
   );
 };
